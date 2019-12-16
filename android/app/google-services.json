@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "49233142170",
+    "firebase_url": "https://nicefooddelivery.firebaseio.com",
+    "project_id": "nicefooddelivery",
+    "storage_bucket": "nicefooddelivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49233142170:android:bf0a2cc9db828c578c5a23",
+        "android_client_info": {
+          "package_name": "com.alien1900.niceFoodDelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49233142170-9vq58ekdkv50en0fg1hltj11stpcsojm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvJf9ayxpudjtnJ_VwWrHzt2nR8WL9gxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49233142170-9vq58ekdkv50en0fg1hltj11stpcsojm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "49233142170-unhlri554uikd2b1enu2gvaupk7tl9t4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alien1900.niceFoodDelivery"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
