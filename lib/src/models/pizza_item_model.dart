@@ -3,14 +3,14 @@ import 'package:meta/meta.dart';
 
 import 'base_item_model.dart';
 
-part 'sushi_item_model.g.dart';
+part 'pizza_item_model.g.dart';
 
 @JsonSerializable()
-class SushiItemModel extends BaseItemModel {
+class PizzaItemModel extends BaseItemModel {
   final int quantity;
   final int weigh;
 
-  SushiItemModel({
+  PizzaItemModel({
     @required String id,
     @required String name,
     @required double price,
@@ -31,10 +31,10 @@ class SushiItemModel extends BaseItemModel {
             fats: fats,
             ingredients: ingredients,
             proteins: proteins,
-            pictureUrl: pictureUrl);
+            pictureUrl: pictureUrl,);
 
-  factory SushiItemModel.fromSnapshot(Map<String, dynamic> map, String id) {
+  factory PizzaItemModel.fromSnapshot(Map<String, dynamic> map, String id) {
     map['id'] = id;
-    return _$SushiItemModelFromJson(map);
+    return _$PizzaItemModelFromJson(map);
   }
 }

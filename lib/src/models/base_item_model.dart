@@ -9,6 +9,7 @@ class BaseItemModel {
   final double fats;
   final double proteins;
   final List<String> ingredients;
+  final String pictureUrl;
 
   BaseItemModel({
     @required this.id,
@@ -19,5 +20,6 @@ class BaseItemModel {
     @required this.fats,
     @required this.carbohydrates,
     @required this.energy,
+    @required this.pictureUrl,
   });
 }
