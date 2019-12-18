@@ -36,8 +36,15 @@ class App extends StatelessWidget {
 
   ThemeData _getThemeData() {
     return ThemeData(
-        primarySwatch: Colors.brown,
-        textTheme:
-            TextTheme(caption: TextStyle(color: Colors.white, fontSize: 18),subtitle: TextStyle(color: Colors.white, fontSize: 16)));
+      primarySwatch: Colors.brown,
+      backgroundColor: Colors.grey[400],
+      accentColor: Colors.green[400],
+      textTheme: TextTheme(
+        caption: TextStyle(color: Colors.white, fontSize: 18),
+        subtitle: TextStyle(color: Colors.white, fontSize: 16),
+        title: TextStyle(color: Colors.black87, fontSize: 22),
+        body1: TextStyle(color: Colors.black87),
+      ),
+    );
   }
 }

@@ -11,7 +11,7 @@ SushiItemModel _$SushiItemModelFromJson(Map<String, dynamic> json) {
     id: json['id'] as String,
     name: json['name'] as String,
     price: (json['price'] as num)?.toDouble(),
-    energy: json['energy'] as int,
+    energy: (json['energy'] as num)?.toDouble(),
     carbohydrates: (json['carbohydrates'] as num)?.toDouble(),
     fats: (json['fats'] as num)?.toDouble(),
     proteins: (json['proteins'] as num)?.toDouble(),

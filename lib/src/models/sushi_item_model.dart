@@ -14,7 +14,7 @@ class SushiItemModel extends BaseItemModel {
     @required String id,
     @required String name,
     @required double price,
-    @required int energy,
+    @required double energy,
     @required double carbohydrates,
     @required double fats,
     @required double proteins,
@@ -37,4 +37,10 @@ class SushiItemModel extends BaseItemModel {
     map['id'] = id;
     return _$SushiItemModelFromJson(map);
   }
+
+  @override
+  String toString() {
+    return 'SushiItemModel{id: $id, name: $name, price: $price, energy: $energy, carbohydrates: $carbohydrates, fats: $fats, proteins: $proteins, ingredients: $ingredients, pictureUrl: $pictureUrl, quantity: $quantity, weigh: $weigh}';
+  }
+
 }

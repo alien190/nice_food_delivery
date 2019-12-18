@@ -2,17 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'resources.dart';
 import '../models/models.dart';
 
-class FirebaseProvider implements StorageProvider {
+class FirebaseStorageProvider implements StorageProvider {
   static const catalogCollection = 'catalog';
   static const itemsCollection = 'items';
+  static const userCollection = 'users';
+  static const userCardCollection = 'card';
 
-  static final _instance = FirebaseProvider._internal();
+  static final _instance = FirebaseStorageProvider._internal();
 
   final _firestoreInstance = Firestore.instance;
 
-  FirebaseProvider._internal();
+  FirebaseStorageProvider._internal();
 
-  factory FirebaseProvider() => _instance;
+  factory FirebaseStorageProvider() => _instance;
 
   @override
   Stream<List<CategoryItemModel>> fetchCategories() {
@@ -46,5 +48,14 @@ class FirebaseProvider implements StorageProvider {
         .map((document) => ModelsFactory.fromSnapshot(
             document.data, document.documentID, itemType))
         .toList();
+  }
+
+  @override
+  Future addItemToCard(String userId, CardItemModel cardItem) {
+    return _firestoreInstance
+        .collection(userCollection)
+        .document(userId)
+        .collection(userCardCollection)
+        .add(cardItem.toJson());
   }
 }

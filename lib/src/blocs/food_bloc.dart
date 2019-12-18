@@ -1,4 +1,5 @@
 import '../recources/resources.dart';
+import '../models/models.dart';
 
 class FoodBloc {
   final Repository _repository;
@@ -24,5 +25,18 @@ class FoodBloc {
     return _itemsStream;
   }
 
-  void dispose() {}
+  Future addItemToCard(BaseItemModel item) async {
+    final cardItem = CardItemModel(
+      id: '',
+      itemId: item.id,
+      name: item.name,
+      pictureUrl: item.pictureUrl,
+      price: item.price,
+    );
+    return _repository.addItemToCard(cardItem);
+  }
+
+  void dispose() {
+    _repository.dispose();
+  }
 }

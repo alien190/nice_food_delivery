@@ -4,7 +4,7 @@ class BaseItemModel {
   final String id;
   final String name;
   final double price;
-  final int energy;
+  final double energy;
   final double carbohydrates;
   final double fats;
   final double proteins;
@@ -22,4 +22,6 @@ class BaseItemModel {
     @required this.energy,
     @required this.pictureUrl,
   });
+
+
 }

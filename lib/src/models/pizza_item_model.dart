@@ -14,7 +14,7 @@ class PizzaItemModel extends BaseItemModel {
     @required String id,
     @required String name,
     @required double price,
-    @required int energy,
+    @required double energy,
     @required double carbohydrates,
     @required double fats,
     @required double proteins,
