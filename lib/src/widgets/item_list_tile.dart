@@ -31,6 +31,7 @@ class ItemListTile extends StatelessWidget {
           ListTileImage(
             pictureUrl: item.pictureUrl,
             heroTag: item.id,
+            borderRadius: 15,
           ),
           _buildListTileCaption(item, context),
           _buildListTileFooter(item, context),

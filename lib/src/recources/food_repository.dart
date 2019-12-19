@@ -12,6 +12,10 @@ class FoodRepository implements Repository {
     return await _authProvider.authUserId.first;
   }
 
+  Stream<String> _getUserIdStream() {
+    return _authProvider.authUserId;
+  }
+
   factory FoodRepository() => _instance;
 
   Stream<List<CategoryItemModel>> fetchCategories() {
@@ -27,6 +31,25 @@ class FoodRepository implements Repository {
   Future addItemToCard(CardItemModel cardItem) async {
     final String userId = await _getUserId();
     return _storageProvider.addItemToCard(userId, cardItem);
+  }
+
+  @override
+  Stream<List<CardItemModel>> fetchCardItems() {
+    return _storageProvider.fetchCardItems(_getUserIdStream());
+  }
+
+  @override
+  Future<bool> removeItemFromCard(CardItemModel cardItemModel) async {
+    final String userId = await _getUserId();
+    print('ondelete');
+    //if (cardItemModel.quantity == 1) {
+    await _storageProvider.deleteCardItem(userId, cardItemModel);
+    return true;
+//    } else {
+//      await _storageProvider.updateCardItem(
+//          userId, cardItemModel.id, {'quantity': cardItemModel.quantity - 1});
+//      return false;
+//    }
   }
 
   @override

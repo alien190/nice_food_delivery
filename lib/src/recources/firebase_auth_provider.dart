@@ -11,12 +11,12 @@ class FirebaseAuthProvider implements AuthProvider {
   Stream<String> get authUserId => _authUserId.stream;
 
   FirebaseAuthProvider._internal() {
-    _singIn();
+    _singIn().then((_) {}, onError: (error) => print(error));
   }
 
   factory FirebaseAuthProvider() => _instance;
 
-  void _singIn() async {
+  Future<void> _singIn() async {
     FirebaseUser curUser = await FirebaseAuth.instance.currentUser();
     if (curUser == null) {
       await FirebaseAuth.instance.signInAnonymously();

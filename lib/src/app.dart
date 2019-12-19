@@ -13,7 +13,10 @@ class App extends StatelessWidget {
         title: 'Nice Food Delivery',
         home: CategoriesScreen(),
         theme: _getThemeData(),
-        routes: {ItemsScreen.routeName: (ctx) => ItemsScreen()},
+        routes: {
+          ItemsScreen.routeName: (ctx) => ItemsScreen(),
+          CardItemsScreen.routeName: (ctx) => CardItemsScreen(),
+        },
       ),
     );
   }
@@ -43,7 +46,9 @@ class App extends StatelessWidget {
         caption: TextStyle(color: Colors.white, fontSize: 18),
         subtitle: TextStyle(color: Colors.white, fontSize: 16),
         title: TextStyle(color: Colors.black87, fontSize: 22),
+        body2: TextStyle(color: Colors.white, fontSize: 22),
         body1: TextStyle(color: Colors.black87),
+        subhead: TextStyle(color: Colors.grey[800], fontSize: 18),
       ),
     );
   }

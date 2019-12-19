@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../screens/screens.dart';
+
 class ScaffoldWithBackground extends StatelessWidget {
   final Widget child;
 
@@ -32,7 +34,8 @@ class ScaffoldWithBackground extends StatelessWidget {
                   Icons.card_giftcard,
                 ),
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(CardItemsScreen.routeName),
               )
             ],
           ),

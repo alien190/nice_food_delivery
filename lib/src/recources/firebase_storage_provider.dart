@@ -1,12 +1,15 @@
+import 'dart:async';
+import 'package:rxdart/rxdart.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'resources.dart';
 import '../models/models.dart';
 
 class FirebaseStorageProvider implements StorageProvider {
-  static const catalogCollection = 'catalog';
-  static const itemsCollection = 'items';
-  static const userCollection = 'users';
-  static const userCardCollection = 'card';
+  static const _catalogCollection = 'catalog';
+  static const _itemsCollection = 'items';
+  static const _userCollection = 'users';
+  static const _userCardCollection = 'card';
 
   static final _instance = FirebaseStorageProvider._internal();
 
@@ -18,13 +21,15 @@ class FirebaseStorageProvider implements StorageProvider {
 
   @override
   Stream<List<CategoryItemModel>> fetchCategories() {
+    print('fetchCategories');
     return _firestoreInstance
-        .collection(catalogCollection)
+        .collection(_catalogCollection)
         .snapshots()
-        .map(_mapCategory);
+        .map(_mapCategories);
   }
 
-  List<CategoryItemModel> _mapCategory(QuerySnapshot snapshot) {
+  List<CategoryItemModel> _mapCategories(QuerySnapshot snapshot) {
+    print(snapshot);
     return snapshot.documents
         .map((document) =>
             CategoryItemModel.fromSnapshot(document.data, document.documentID))
@@ -35,14 +40,14 @@ class FirebaseStorageProvider implements StorageProvider {
   Stream<List<BaseItemModel>> fetchCategoryItems(
       ItemType itemType, String parentDocumentId) {
     return _firestoreInstance
-        .collection(catalogCollection)
+        .collection(_catalogCollection)
         .document(parentDocumentId)
-        .collection(itemsCollection)
+        .collection(_itemsCollection)
         .snapshots()
-        .map((snapshot) => _mapCategoryItem(snapshot, itemType));
+        .map((snapshot) => _mapCategoryItems(snapshot, itemType));
   }
 
-  List<BaseItemModel> _mapCategoryItem(
+  List<BaseItemModel> _mapCategoryItems(
       QuerySnapshot snapshot, ItemType itemType) {
     return snapshot.documents
         .map((document) => ModelsFactory.fromSnapshot(
@@ -53,9 +58,55 @@ class FirebaseStorageProvider implements StorageProvider {
   @override
   Future addItemToCard(String userId, CardItemModel cardItem) {
     return _firestoreInstance
-        .collection(userCollection)
+        .collection(_userCollection)
         .document(userId)
-        .collection(userCardCollection)
+        .collection(_userCardCollection)
         .add(cardItem.toJson());
+  }
+
+  @override
+  Stream<List<CardItemModel>> fetchCardItems(Stream<String> userId) {
+    return userId.transform(FlatMapStreamTransformer((userId) =>
+        _firestoreInstance
+            .collection(_userCollection)
+            .document(userId)
+            .collection(_userCardCollection)
+            .snapshots()
+            .map(_mapCardItems)));
+  }
+
+  List<CardItemModel> _mapCardItems(QuerySnapshot snapshot) {
+    final Map<String, CardItemModel> itemsMap = {};
+
+    snapshot.documents.forEach((DocumentSnapshot document) {
+      final CardItemModel item =
+          CardItemModel.fromSnapshot(document.data, document.documentID);
+      final existingItem = itemsMap[item.itemId];
+      if (existingItem == null) {
+        itemsMap[item.itemId] = item;
+      } else {
+        itemsMap[item.itemId] = CardItemModel.increaseQuantity(existingItem);
+      }
+    });
+    return itemsMap.values.toList();
+  }
+
+  Future<void> deleteCardItem(String userId, CardItemModel cardItemModel) {
+    return _firestoreInstance
+        .collection(_userCollection)
+        .document(userId)
+        .collection(_userCardCollection)
+        .document(cardItemModel.id)
+        .delete();
+  }
+
+  Future<void> updateCardItem(
+      String userId, String id, Map<String, dynamic> data) {
+    return _firestoreInstance
+        .collection(_userCollection)
+        .document(userId)
+        .collection(_userCardCollection)
+        .document(id)
+        .updateData(data);
   }
 }

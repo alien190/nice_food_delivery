@@ -27,7 +27,7 @@ class CategoryListTile extends StatelessWidget {
           border: Border.all(color: Colors.white, width: 2)),
       child: Stack(
         children: <Widget>[
-          ListTileImage(pictureUrl: item.pictureUrl),
+          ListTileImage(pictureUrl: item.pictureUrl, borderRadius: 15,),
           ListTileCaption(name: item.name),
           _buildTapWidget(context, item),
         ],

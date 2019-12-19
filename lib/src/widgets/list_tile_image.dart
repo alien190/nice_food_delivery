@@ -6,15 +6,17 @@ class ListTileImage extends StatelessWidget {
     Key key,
     @required this.pictureUrl,
     this.heroTag,
+    this.borderRadius = 0,
   }) : super(key: key);
 
   final String pictureUrl;
   final String heroTag;
+  final double borderRadius;
 
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(borderRadius),
       child: Stack(
         children: <Widget>[
           Container(
