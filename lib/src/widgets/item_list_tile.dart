@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
+import '../blocs/blocs.dart';
 import 'widgets.dart';
 
 class ItemListTile extends StatelessWidget {
@@ -36,6 +37,7 @@ class ItemListTile extends StatelessWidget {
           _buildListTileCaption(item, context),
           _buildListTileFooter(item, context),
           _buildTapWidget(context, item),
+          _buildAddButton(item, context),
         ],
       ),
     );
@@ -60,20 +62,27 @@ class ItemListTile extends StatelessWidget {
   ListTileFooter _buildListTileFooter(
       BaseItemModel item, BuildContext context) {
     return ListTileFooter(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '\$${item.price}',
-            style: Theme.of(context).textTheme.subtitle,
-          ),
-          Icon(
-            Icons.add_circle,
-            color: Colors.white,
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          '\$${item.price}',
+          style: Theme.of(context).textTheme.subtitle,
+        ),
       ),
     );
+  }
+
+  Widget _buildAddButton(BaseItemModel item, BuildContext context) {
+    return Container(
+        alignment: Alignment.bottomRight,
+        child: IconButton(
+          padding: EdgeInsets.all(0),
+          onPressed: () => _addItemToCard(item, context),
+          icon: Icon(
+            Icons.add_circle,
+            color: Colors.white,
+          ),
+        ));
   }
 
   ListTileCaption _buildListTileCaption(
@@ -82,6 +91,19 @@ class ItemListTile extends StatelessWidget {
       name: item.name,
       textAlign: TextAlign.start,
       textStyle: Theme.of(context).textTheme.subtitle,
+    );
+  }
+
+  void _addItemToCard(BaseItemModel item, BuildContext context) {
+    final FoodBloc bloc = Provider.of<FoodBloc>(context);
+    final ScaffoldState scaffoldState = Scaffold.of(context);
+    bloc.addItemToCard(item);
+    scaffoldState.hideCurrentSnackBar();
+    scaffoldState.showSnackBar(
+      SnackBar(
+        content: Text('${item.name} added to card'),
+        duration: Duration(seconds: 1),
+      ),
     );
   }
 }

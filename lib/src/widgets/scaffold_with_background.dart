@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../screens/screens.dart';
+import '../widgets/widgets.dart';
 
 class ScaffoldWithBackground extends StatelessWidget {
   final Widget child;
+  final bool disableCardButton;
 
   const ScaffoldWithBackground({
     Key key,
     @required this.child,
+    this.disableCardButton = false,
   }) : super(key: key);
 
   @override
@@ -28,16 +30,7 @@ class ScaffoldWithBackground extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.card_giftcard,
-                ),
-                color: Colors.white,
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(CardItemsScreen.routeName),
-              )
-            ],
+            actions: <Widget>[CardButton(disableCardButton: disableCardButton)],
           ),
           body: Container(
             color: Colors.transparent,

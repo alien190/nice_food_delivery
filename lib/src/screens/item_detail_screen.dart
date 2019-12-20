@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../models/models.dart';
 import '../blocs/blocs.dart';
+import '../widgets/widgets.dart';
 
 class ItemDetailScreen extends StatelessWidget {
   @override
@@ -19,6 +20,7 @@ class ItemDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            actions: <Widget>[CardButton()],
             expandedHeight: height,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(

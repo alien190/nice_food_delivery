@@ -12,6 +12,7 @@ class CardItemsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaffoldWithBackground(
       child: _buildContent(context),
+      disableCardButton: true,
     );
   }
 
