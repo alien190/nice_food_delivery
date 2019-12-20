@@ -16,4 +16,12 @@ class CardSumModel {
     @required this.fats,
     @required this.proteins,
   });
+
+  bool isEmpty() {
+    return quantity == 0;
+  }
+
+  bool isNotEmpty() {
+    return quantity > 0;
+  }
 }

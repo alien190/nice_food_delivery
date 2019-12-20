@@ -63,6 +63,15 @@ class CardItemModel {
     );
   }
 
+  factory CardItemModel.increaseQuantityAndPrice(
+      CardItemModel item, double price) {
+    return CardItemModel.copyWith(
+      item,
+      quantity: item.quantity + 1,
+      price: item.price + price,
+    );
+  }
+
   factory CardItemModel.decreaseQuantity(CardItemModel item) {
     return CardItemModel.copyWith(
       item,

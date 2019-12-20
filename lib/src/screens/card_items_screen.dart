@@ -26,7 +26,9 @@ class CardItemsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text('Your Cart', style: themeData.textTheme.body2),
         ),
-        Expanded(child: _buildList(bloc)),
+        Expanded(
+          child: _buildList(bloc, themeData),
+        ),
         _buildFooter(themeData, bloc),
       ],
     );
@@ -74,7 +76,7 @@ class CardItemsScreen extends StatelessWidget {
           style: themeData.textTheme.subhead,
         ),
         Text(
-          '\$${cardSum.price.toStringAsFixed(2)}',
+          'x${cardSum.quantity}  \$${cardSum.price.toStringAsFixed(2)}',
           style: themeData.textTheme.title,
         ),
       ],
@@ -104,14 +106,17 @@ class CardItemsScreen extends StatelessWidget {
           ],
         ),
         FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: cardSum.isNotEmpty() ? () {} : null,
+          backgroundColor: cardSum.isNotEmpty()
+              ? themeData.accentColor
+              : themeData.backgroundColor,
           label: Text('PLACE ORDER'),
         ),
       ],
     );
   }
 
-  Widget _buildList(FoodBloc bloc) {
+  Widget _buildList(FoodBloc bloc, ThemeData themeData) {
     return StreamBuilder(
       stream: bloc.fetchCardItems(),
       builder:
@@ -121,16 +126,8 @@ class CardItemsScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: items.length,
             //padding: EdgeInsets.all(10),
-            itemBuilder: (BuildContext context, int index) => Dismissible(
-              key: ValueKey(items[index].itemId),
-              //confirmDismiss: (_) => Future.value(items[index].quantity == 1),
-
-              confirmDismiss: (_) => bloc.removeItemFromCard(items[index]),
-              child: Provider<CardItemModel>.value(
-                value: items[index],
-                child: CardListTile(),
-              ),
-            ),
+            itemBuilder: (BuildContext context, int index) =>
+                _buildItem(themeData, items[index], bloc),
           );
         }
 
@@ -141,6 +138,34 @@ class CardItemsScreen extends StatelessWidget {
 
         return InProgress();
       },
+    );
+  }
+
+  Widget _buildItem(ThemeData themeData, CardItemModel item, FoodBloc bloc) {
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      background: Container(
+        alignment: Alignment.centerRight,
+        color: themeData.errorColor,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: item.quantity == 1
+              ? Icon(
+                  Icons.delete,
+                  color: Colors.white,
+                )
+              : Text(
+                  '-1',
+                  style: themeData.textTheme.body2,
+                ),
+        ),
+      ),
+      key: ValueKey(item.itemId),
+      confirmDismiss: (_) => bloc.removeItemFromCard(item),
+      child: Provider<CardItemModel>.value(
+        value: item,
+        child: CardListTile(),
+      ),
     );
   }
 }

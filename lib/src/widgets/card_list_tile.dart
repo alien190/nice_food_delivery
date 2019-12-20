@@ -14,8 +14,8 @@ class CardListTile extends StatelessWidget {
         Provider.of<CardItemModel>(context, listen: false);
 
     final double width = MediaQuery.of(context).size.width;
-
-    final double pictureSize = width * 0.3;
+    final double pictureSize = width * 0.2;
+    final ThemeData themeData = Theme.of(context);
 
     return Container(
         width: double.infinity,
@@ -24,12 +24,46 @@ class CardListTile extends StatelessWidget {
           color: Theme.of(context).backgroundColor,
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             SizedBox.fromSize(
               size: Size(pictureSize, pictureSize),
               child: ListTileImage(pictureUrl: item.pictureUrl),
             ),
-            Text('${item.name} ${item.quantity}')
+            Expanded(
+              child: Container(
+                height: pictureSize,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        '${item.name}',
+                        style: themeData.textTheme.title,
+                        maxLines: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[
+                          Text(
+                            'x${item.quantity}',
+                            style: themeData.textTheme.title,
+                          ),
+                          Text(
+                            '\$${item.price.toStringAsFixed(2)}',
+                            style: themeData.textTheme.title,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ));
   }

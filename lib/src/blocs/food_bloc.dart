@@ -23,7 +23,7 @@ class FoodBloc {
       int quantity = 0;
 
       items.forEach((item) {
-        price += item.price * item.quantity;
+        price += item.price;
         energy += item.energy * item.quantity;
         carbohydrates += item.carbohydrates * item.quantity;
         fats += item.fats * item.quantity;

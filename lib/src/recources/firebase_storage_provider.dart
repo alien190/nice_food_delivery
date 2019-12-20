@@ -21,7 +21,6 @@ class FirebaseStorageProvider implements StorageProvider {
 
   @override
   Stream<List<CategoryItemModel>> fetchCategories() {
-    print('fetchCategories');
     return _firestoreInstance
         .collection(_catalogCollection)
         .snapshots()
@@ -29,7 +28,6 @@ class FirebaseStorageProvider implements StorageProvider {
   }
 
   List<CategoryItemModel> _mapCategories(QuerySnapshot snapshot) {
-    print(snapshot);
     return snapshot.documents
         .map((document) =>
             CategoryItemModel.fromSnapshot(document.data, document.documentID))
@@ -71,6 +69,7 @@ class FirebaseStorageProvider implements StorageProvider {
             .collection(_userCollection)
             .document(userId)
             .collection(_userCardCollection)
+            .orderBy('itemId')
             .snapshots()
             .map(_mapCardItems)));
   }
@@ -85,7 +84,8 @@ class FirebaseStorageProvider implements StorageProvider {
       if (existingItem == null) {
         itemsMap[item.itemId] = item;
       } else {
-        itemsMap[item.itemId] = CardItemModel.increaseQuantity(existingItem);
+        itemsMap[item.itemId] =
+            CardItemModel.increaseQuantityAndPrice(existingItem, item.price);
       }
     });
     return itemsMap.values.toList();
