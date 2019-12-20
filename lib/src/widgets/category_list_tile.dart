@@ -38,7 +38,7 @@ class CategoryListTile extends StatelessWidget {
   Material _buildTapWidget(BuildContext context, CategoryItemModel item) {
     return Material(
       color: Colors.transparent,
-      child: new InkWell(
+      child: InkWell(
         onTap: () => Navigator.of(context).push(
           MaterialPageRoute(
             builder: (ctx) => Provider<CategoryItemModel>.value(

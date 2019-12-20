@@ -10,6 +10,8 @@ class FoodBloc {
   String _parentDocumentId;
   Stream<List<BaseItemModel>> _itemsStream;
   final _cardItemSum = BehaviorSubject<CardSumModel>();
+  List<CardItemModel> _cardItems = [];
+  CardSumModel _cardSum = CardSumModel.empty();
 
   Stream<CardSumModel> get cardItemSum => _cardItemSum.stream;
 
@@ -22,6 +24,8 @@ class FoodBloc {
       double proteins = 0;
       int quantity = 0;
 
+      _cardItems = items;
+
       items.forEach((item) {
         price += item.price;
         energy += item.energy * item.quantity;
@@ -31,14 +35,16 @@ class FoodBloc {
         quantity += item.quantity;
       });
 
-      _cardItemSum.add(CardSumModel(
+      _cardSum = CardSumModel(
         price: price,
         quantity: quantity,
         energy: energy,
         carbohydrates: carbohydrates,
         fats: fats,
         proteins: proteins,
-      ));
+      );
+
+      _cardItemSum.add(_cardSum);
     }, onError: _cardItemSum.addError);
   }
 
@@ -80,6 +86,18 @@ class FoodBloc {
 
   Stream<List<CardItemModel>> fetchCardItems() {
     return _repository.fetchCardItems();
+  }
+
+  Stream<List<OrderModel>> fetchOrders() {
+    return _repository.fetchOrders();
+  }
+
+  Future placeOrder() async {
+    final OrderModel order = OrderModel(
+        cardSum: _cardSum,
+        items: _cardItems,
+        dateTime: DateTime.now().millisecondsSinceEpoch ~/ 1000);
+    return _repository.addOrder(order);
   }
 
   void dispose() {

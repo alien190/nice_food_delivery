@@ -9,7 +9,7 @@ abstract class StorageProvider {
   Stream<List<BaseItemModel>> fetchCategoryItems(
       ItemType itemType, String parentDocumentId);
 
-  Future addItemToCard(String userId, CardItemModel cardItem);
+  Future<void> addItemToCard(String userId, CardItemModel cardItem);
 
   Stream<List<CardItemModel>> fetchCardItems(Stream<String> userId);
 
@@ -17,6 +17,12 @@ abstract class StorageProvider {
 
   Future<void> updateCardItem(
       String userId, String id, Map<String, dynamic> data);
+
+  Future<void> addOrder(String userId, OrderModel order);
+
+  Future<void> clearCard(String userId);
+
+  Stream<List<OrderModel>> fetchOrders(Stream<String> userId);
 }
 
 abstract class Repository {
@@ -31,6 +37,10 @@ abstract class Repository {
   Stream<List<CardItemModel>> fetchCardItems();
 
   Future<bool> removeItemFromCard(CardItemModel cardItemModel);
+
+  Future addOrder(OrderModel order);
+
+  Stream<List<OrderModel>> fetchOrders();
 }
 
 abstract class AuthProvider {

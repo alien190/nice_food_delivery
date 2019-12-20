@@ -13,6 +13,7 @@ class CardItemsScreen extends StatelessWidget {
     return ScaffoldWithBackground(
       child: _buildContent(context),
       disableCardButton: true,
+      title: 'Your Cart',
     );
   }
 
@@ -23,10 +24,6 @@ class CardItemsScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text('Your Cart', style: themeData.textTheme.body2),
-        ),
         Expanded(
           child: _buildList(bloc, themeData),
         ),
@@ -59,7 +56,7 @@ class CardItemsScreen extends StatelessWidget {
                         child: _buildTotalSection(themeData, cardSum),
                       )),
                       IntrinsicWidth(
-                        child: _buildButtonSection(cardSum, themeData),
+                        child: _buildButtonSection(cardSum, themeData, bloc),
                       )
                     ],
                   ),
@@ -71,7 +68,8 @@ class CardItemsScreen extends StatelessWidget {
         });
   }
 
-  Widget _buildButtonSection(CardSumModel cardSum, ThemeData themeData) {
+  Widget _buildButtonSection(
+      CardSumModel cardSum, ThemeData themeData, FoodBloc bloc) {
     return Column(
       children: <Widget>[
         Expanded(
@@ -93,7 +91,7 @@ class CardItemsScreen extends StatelessWidget {
           ),
         ),
         FloatingActionButton.extended(
-          onPressed: cardSum.isNotEmpty() ? () {} : null,
+          onPressed: cardSum.isNotEmpty() ? bloc.placeOrder : null,
           backgroundColor: cardSum.isNotEmpty()
               ? themeData.accentColor
               : themeData.backgroundColor,

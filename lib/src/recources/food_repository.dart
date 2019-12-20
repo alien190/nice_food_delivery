@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'firebase_storage_provider.dart';
 import 'resources.dart';
 
@@ -41,15 +43,20 @@ class FoodRepository implements Repository {
   @override
   Future<bool> removeItemFromCard(CardItemModel cardItemModel) async {
     final String userId = await _getUserId();
-    print('ondelete');
-    //if (cardItemModel.quantity == 1) {
     await _storageProvider.deleteCardItem(userId, cardItemModel);
     return true;
-//    } else {
-//      await _storageProvider.updateCardItem(
-//          userId, cardItemModel.id, {'quantity': cardItemModel.quantity - 1});
-//      return false;
-//    }
+  }
+
+  @override
+  Future<void> addOrder(OrderModel order) async {
+    final String userId = await _getUserId();
+    await _storageProvider.addOrder(userId, order);
+    await _storageProvider.clearCard(userId);
+  }
+
+  @override
+  Stream<List<OrderModel>> fetchOrders() {
+    return _storageProvider.fetchOrders(_getUserIdStream());
   }
 
   @override

@@ -5,3 +5,4 @@ export 'models_factory.dart';
 export 'pizza_item_model.dart';
 export 'card_item_model.dart';
 export 'card_sum_model.dart';
+export 'order_model.dart';

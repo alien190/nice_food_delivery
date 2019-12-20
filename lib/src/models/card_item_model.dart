@@ -84,6 +84,10 @@ class CardItemModel {
     return _$CardItemModelFromJson(map);
   }
 
+  factory CardItemModel.fromJson(Map<String, dynamic> map) {
+    return _$CardItemModelFromJson(map);
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> map = _$CardItemModelToJson(this);
     map.remove('id');

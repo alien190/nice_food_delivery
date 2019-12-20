@@ -10,6 +10,9 @@ class FirebaseStorageProvider implements StorageProvider {
   static const _itemsCollection = 'items';
   static const _userCollection = 'users';
   static const _userCardCollection = 'card';
+  static const _userOrdersCollection = 'orders';
+  static const _cardItemsOrderBy = 'itemId';
+  static const _ordersOrderBy = 'dateTime';
 
   static final _instance = FirebaseStorageProvider._internal();
 
@@ -69,7 +72,7 @@ class FirebaseStorageProvider implements StorageProvider {
             .collection(_userCollection)
             .document(userId)
             .collection(_userCardCollection)
-            .orderBy('itemId')
+            .orderBy(_cardItemsOrderBy)
             .snapshots()
             .map(_mapCardItems)));
   }
@@ -92,11 +95,15 @@ class FirebaseStorageProvider implements StorageProvider {
   }
 
   Future<void> deleteCardItem(String userId, CardItemModel cardItemModel) {
+    return _deleteCardItemById(userId, cardItemModel.id);
+  }
+
+  Future<void> _deleteCardItemById(String userId, String id) {
     return _firestoreInstance
         .collection(_userCollection)
         .document(userId)
         .collection(_userCardCollection)
-        .document(cardItemModel.id)
+        .document(id)
         .delete();
   }
 
@@ -108,5 +115,46 @@ class FirebaseStorageProvider implements StorageProvider {
         .collection(_userCardCollection)
         .document(id)
         .updateData(data);
+  }
+
+  @override
+  Future addOrder(String userId, OrderModel order) {
+    return _firestoreInstance
+        .collection(_userCollection)
+        .document(userId)
+        .collection(_userOrdersCollection)
+        .add(order.toJson());
+  }
+
+  @override
+  Future<void> clearCard(String userId) async {
+    final QuerySnapshot querySnapshot = await _firestoreInstance
+        .collection(_userCollection)
+        .document(userId)
+        .collection(_userCardCollection)
+        .getDocuments();
+
+    querySnapshot.documents.forEach((DocumentSnapshot document) {
+      _deleteCardItemById(userId, document.documentID);
+    });
+  }
+
+  @override
+  Stream<List<OrderModel>> fetchOrders(Stream<String> userId) {
+    return userId.transform(FlatMapStreamTransformer((userId) =>
+        _firestoreInstance
+            .collection(_userCollection)
+            .document(userId)
+            .collection(_userOrdersCollection)
+            .orderBy(_ordersOrderBy)
+            .snapshots()
+            .map(_mapOrders)));
+  }
+
+  List<OrderModel> _mapOrders(QuerySnapshot snapshot) {
+    return snapshot.documents
+        .map((DocumentSnapshot document) =>
+            OrderModel.fromSnapshot(document.data, document.documentID))
+        .toList();
   }
 }

@@ -16,6 +16,7 @@ class App extends StatelessWidget {
         routes: {
           ItemsScreen.routeName: (ctx) => ItemsScreen(),
           CardItemsScreen.routeName: (ctx) => CardItemsScreen(),
+          OrdersScreen.routeName: (ctx) => OrdersScreen(),
         },
       ),
     );

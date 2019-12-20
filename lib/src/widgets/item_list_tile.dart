@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 import '../screens/screens.dart';
-import '../blocs/blocs.dart';
 import 'widgets.dart';
+import '../mixins/mixins.dart';
 
-class ItemListTile extends StatelessWidget {
+
+class ItemListTile extends StatelessWidget with AddToCardMixin{
   ItemListTile();
 
   @override
@@ -77,7 +78,7 @@ class ItemListTile extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: IconButton(
           padding: EdgeInsets.all(0),
-          onPressed: () => _addItemToCard(item, context),
+          onPressed: () => addItemToCard(item, context),
           icon: Icon(
             Icons.add_circle,
             color: Colors.white,
@@ -94,16 +95,5 @@ class ItemListTile extends StatelessWidget {
     );
   }
 
-  void _addItemToCard(BaseItemModel item, BuildContext context) {
-    final FoodBloc bloc = Provider.of<FoodBloc>(context);
-    final ScaffoldState scaffoldState = Scaffold.of(context);
-    bloc.addItemToCard(item);
-    scaffoldState.hideCurrentSnackBar();
-    scaffoldState.showSnackBar(
-      SnackBar(
-        content: Text('${item.name} added to card'),
-        duration: Duration(seconds: 1),
-      ),
-    );
-  }
+
 }

@@ -4,8 +4,9 @@ import 'package:provider/provider.dart';
 import '../models/models.dart';
 import '../blocs/blocs.dart';
 import '../widgets/widgets.dart';
+import '../mixins/mixins.dart';
 
-class ItemDetailScreen extends StatelessWidget {
+class ItemDetailScreen extends StatelessWidget with AddToCardMixin {
   @override
   Widget build(BuildContext context) {
     final BaseItemModel item =
@@ -29,7 +30,7 @@ class ItemDetailScreen extends StatelessWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate(
-              [_getDetails(themeData, item, foodBloc)],
+              [_getDetails(themeData, item, foodBloc, context)],
             ),
           ),
         ],
@@ -73,8 +74,8 @@ class ItemDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _getDetails(
-      ThemeData themeData, BaseItemModel item, FoodBloc foodBloc) {
+  Widget _getDetails(ThemeData themeData, BaseItemModel item, FoodBloc foodBloc,
+      BuildContext context) {
     final String ingredients = _getIngredients(item);
 
     return Padding(
@@ -165,10 +166,12 @@ class ItemDetailScreen extends StatelessWidget {
 
   Widget _buildAddButton(
       BaseItemModel item, ThemeData themeData, FoodBloc foodBloc) {
-    return FloatingActionButton.extended(
-      onPressed: () => foodBloc.addItemToCard(item),
-      label: Text('ADD'),
-      icon: Icon(Icons.add_circle),
+    return Builder(
+      builder: (context) => FloatingActionButton.extended(
+        onPressed: () => addItemToCard(item, context),
+        label: Text('ADD'),
+        icon: Icon(Icons.add_circle),
+      ),
     );
   }
 

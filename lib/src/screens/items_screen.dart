@@ -18,6 +18,7 @@ class ItemsScreen extends StatelessWidget {
 
     return ScaffoldWithBackground(
       child: _buildContent(itemsStream),
+      title: category.name,
     );
   }
 
