@@ -50,14 +50,18 @@ class CardItemsScreen extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Column(
-                  children: <Widget>[
-                    _buildTotal(themeData, cardSum),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    _buildButton(themeData, cardSum),
-                  ],
+                child: IntrinsicHeight(
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                        child: _buildTotalSection(themeData, cardSum),
+                      )),
+                      IntrinsicWidth(
+                        child: _buildButtonSection(cardSum, themeData),
+                      )
+                    ],
+                  ),
                 ),
               ),
             );
@@ -66,44 +70,26 @@ class CardItemsScreen extends StatelessWidget {
         });
   }
 
-  Row _buildTotal(ThemeData themeData, CardSumModel cardSum) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildButtonSection(CardSumModel cardSum, ThemeData themeData) {
+    return Column(
       children: <Widget>[
-        Text(
-          'Total',
-          style: themeData.textTheme.subhead,
-        ),
-        Text(
-          'x${cardSum.quantity}  \$${cardSum.price.toStringAsFixed(2)}',
-          style: themeData.textTheme.title,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildButton(ThemeData themeData, CardSumModel cardSum) {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Proteins: ${cardSum.proteins.toStringAsFixed(1)}',
-              style: themeData.textTheme.body1,
-            ),
-            Text(
-              'Fats: ${cardSum.fats.toStringAsFixed(1)}',
-              style: themeData.textTheme.body1,
-            ),
-            Text(
-              'Carbohydrates: ${cardSum.carbohydrates.toStringAsFixed(1)}',
-              style: themeData.textTheme.body1,
-            ),
-          ],
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'x${cardSum.quantity}',
+                style: themeData.textTheme.title,
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Text(
+                '\$${cardSum.price.toStringAsFixed(2)}',
+                style: themeData.textTheme.title,
+              ),
+            ],
+          ),
         ),
         FloatingActionButton.extended(
           onPressed: cardSum.isNotEmpty() ? () {} : null,
@@ -111,6 +97,33 @@ class CardItemsScreen extends StatelessWidget {
               ? themeData.accentColor
               : themeData.backgroundColor,
           label: Text('PLACE ORDER'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTotalSection(ThemeData themeData, CardSumModel cardSum) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          'Total',
+          style: themeData.textTheme.subhead,
+        ),
+        Expanded(
+          child: Container(),
+        ),
+        Text(
+          'Proteins: ${cardSum.proteins.toStringAsFixed(1)}',
+          style: themeData.textTheme.body1,
+        ),
+        Text(
+          'Fats: ${cardSum.fats.toStringAsFixed(1)}',
+          style: themeData.textTheme.body1,
+        ),
+        Text(
+          'Carbohydrates: ${cardSum.carbohydrates.toStringAsFixed(1)}',
+          style: themeData.textTheme.body1,
         ),
       ],
     );
