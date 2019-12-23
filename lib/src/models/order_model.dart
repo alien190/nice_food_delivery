@@ -17,12 +17,16 @@ class OrderModel {
   final CardSumModel cardSum;
   final int dateTime;
   final OrderStatus status;
+  final double lon;
+  final double lat;
 
   OrderModel({
     @required this.cardSum,
     @required this.dateTime,
     @required this.items,
     this.status = OrderStatus.Placed,
+    this.lon = -122.084,
+    this.lat = 37.422,
   });
 
   Map<String, dynamic> toJson() => _$OrderModelToJson(this);

@@ -9,9 +9,11 @@ class CardButton extends StatelessWidget {
   const CardButton({
     Key key,
     this.disableCardButton = false,
+    this.hideOrderButton = false,
   }) : super(key: key);
 
   final bool disableCardButton;
+  final bool hideOrderButton;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +21,20 @@ class CardButton extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        RaisedButton(
-          disabledElevation: 0,
-          disabledColor: Colors.transparent,
-          color: Colors.transparent,
-          elevation: 0,
-          onPressed: () =>
-              Navigator.of(context).pushNamed(OrdersScreen.routeName),
-          child: Icon(Icons.list, color: Colors.white,),
-        ),
+        hideOrderButton
+            ? Container()
+            : RaisedButton(
+                disabledElevation: 0,
+                disabledColor: Colors.transparent,
+                color: Colors.transparent,
+                elevation: 0,
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(OrdersScreen.routeName),
+                child: Icon(
+                  Icons.list,
+                  color: Colors.white,
+                ),
+              ),
         RaisedButton(
           disabledElevation: 0,
           disabledColor: Colors.transparent,

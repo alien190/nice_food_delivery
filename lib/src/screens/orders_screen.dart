@@ -13,6 +13,7 @@ class OrdersScreen extends StatelessWidget {
     return ScaffoldWithBackground(
       child: _buildContent(context),
       title: 'Your orders',
+      hideOrderButton: true,
     );
   }
 

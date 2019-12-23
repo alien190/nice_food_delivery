@@ -5,12 +5,14 @@ import '../widgets/widgets.dart';
 class ScaffoldWithBackground extends StatelessWidget {
   final Widget child;
   final bool disableCardButton;
+  final bool hideOrderButton;
   final String title;
 
   const ScaffoldWithBackground({
     Key key,
     @required this.child,
     this.disableCardButton = false,
+    this.hideOrderButton = false,
     this.title,
   }) : super(key: key);
 
@@ -32,7 +34,7 @@ class ScaffoldWithBackground extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            actions: <Widget>[CardButton(disableCardButton: disableCardButton)],
+            actions: <Widget>[CardButton(disableCardButton: disableCardButton, hideOrderButton: hideOrderButton,)],
             bottom: title != null
                 ? AppBar(
                     title: Text('$title'),

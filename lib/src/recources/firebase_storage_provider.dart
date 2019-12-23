@@ -146,7 +146,7 @@ class FirebaseStorageProvider implements StorageProvider {
             .collection(_userCollection)
             .document(userId)
             .collection(_userOrdersCollection)
-            .orderBy(_ordersOrderBy)
+            .orderBy(_ordersOrderBy, descending: true)
             .snapshots()
             .map(_mapOrders)));
   }

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../blocs/blocs.dart';
 import '../models/models.dart';
 import '../widgets/widgets.dart';
+import '../screens/screens.dart';
 
 class CardItemsScreen extends StatelessWidget {
   static final routeName = '/cardItems';
@@ -90,15 +91,24 @@ class CardItemsScreen extends StatelessWidget {
             ],
           ),
         ),
-        FloatingActionButton.extended(
-          onPressed: cardSum.isNotEmpty() ? bloc.placeOrder : null,
+        Builder(builder: (ctx) => FloatingActionButton.extended(
+          onPressed: cardSum.isNotEmpty()
+              ? () {
+                  _placeOrder(bloc, ctx);
+                }
+              : null,
           backgroundColor: cardSum.isNotEmpty()
               ? themeData.accentColor
               : themeData.backgroundColor,
           label: Text('PLACE ORDER'),
-        ),
+        ),),
       ],
     );
+  }
+
+  void _placeOrder(FoodBloc bloc, BuildContext context) {
+    bloc.placeOrder();
+    Navigator.of(context).popAndPushNamed(OrdersScreen.routeName);
   }
 
   Widget _buildTotalSection(ThemeData themeData, CardSumModel cardSum) {

@@ -22,6 +22,8 @@ OrderModel _$OrderModelFromJson(Map json) {
               )))
         ?.toList(),
     status: _$enumDecodeNullable(_$OrderStatusEnumMap, json['status']),
+    lon: (json['lon'] as num)?.toDouble(),
+    lat: (json['lat'] as num)?.toDouble(),
   );
 }
 
@@ -31,6 +33,8 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'cardSum': instance.cardSum?.toJson(),
       'dateTime': instance.dateTime,
       'status': _$OrderStatusEnumMap[instance.status],
+      'lon': instance.lon,
+      'lat': instance.lat,
     };
 
 T _$enumDecode<T>(
