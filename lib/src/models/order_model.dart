@@ -41,6 +41,8 @@ class OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel{items: $items, cardSum: $cardSum, dateTime: $dateTime, status: $status}';
+    return 'OrderModel{items: $items, cardSum: $cardSum, dateTime: $dateTime, status: $status, lon: $lon, lat: $lat}';
   }
+
+
 }

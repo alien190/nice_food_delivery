@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/models.dart';
+import '../screens/screens.dart';
 import 'widgets.dart';
 
 class OrderListTile extends StatefulWidget {
@@ -177,9 +178,19 @@ class _OrderListTileState extends State<OrderListTile> {
               ? Container(
                   alignment: Alignment.center,
                   width: double.infinity,
-                  child: FloatingActionButton.extended(
-                      onPressed: () {},
-                      label: Text('View current order location')),
+                  child: Builder(
+                    builder: (ctx) => FloatingActionButton.extended(
+                      onPressed: () => Navigator.of(ctx).push(
+                        MaterialPageRoute(
+                          builder: (_) => Provider<OrderModel>.value(
+                            value: order,
+                            child: MapScreen(),
+                          ),
+                        ),
+                      ),
+                      label: Text('View current order location'),
+                    ),
+                  ),
                 )
               : Container(),
         ],

@@ -17,6 +17,7 @@ class App extends StatelessWidget {
           ItemsScreen.routeName: (ctx) => ItemsScreen(),
           CardItemsScreen.routeName: (ctx) => CardItemsScreen(),
           OrdersScreen.routeName: (ctx) => OrdersScreen(),
+          MapScreen.routeName: (ctx) => MapScreen(),
         },
       ),
     );
@@ -51,6 +52,7 @@ class App extends StatelessWidget {
         body1: TextStyle(color: Colors.black87),
         subhead: TextStyle(color: Colors.grey[800], fontSize: 18),
       ),
+      splashColor: Colors.green,
     );
   }
 }
