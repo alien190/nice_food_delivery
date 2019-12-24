@@ -33,7 +33,7 @@ class CardListTile extends StatelessWidget {
             ),
             Expanded(
               child: Container(
-                height: pictureSize,
+                //height: pictureSize,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
@@ -42,7 +42,7 @@ class CardListTile extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         '${item.name}',
-                        style: themeData.textTheme.title,
+                        style: themeData.textTheme.headline,
                         maxLines: 2,
                       ),
                       Row(

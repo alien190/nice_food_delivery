@@ -12,7 +12,7 @@ class ItemDetailScreen extends StatelessWidget with AddToCardMixin {
     final BaseItemModel item =
         Provider.of<BaseItemModel>(context, listen: false);
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
-    final double height = mediaQueryData.size.height * 0.3;
+    final double height = mediaQueryData.size.height * 0.5;
     final ThemeData themeData = Theme.of(context);
     final FoodBloc foodBloc = Provider.of<FoodBloc>(context, listen: false);
 

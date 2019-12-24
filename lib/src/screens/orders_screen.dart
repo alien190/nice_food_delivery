@@ -25,7 +25,11 @@ class OrdersScreen extends StatelessWidget {
       builder: (context, AsyncSnapshot<List<OrderModel>> snapshot) {
         if (snapshot.hasData) {
           print(snapshot.data);
-          return _buildList(snapshot.data);
+          if (snapshot.data.length == 0) {
+            return Empty();
+          } else {
+            return _buildList(snapshot.data);
+          }
         }
         if (snapshot.hasError) {
           print('${snapshot.error}');

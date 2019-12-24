@@ -3,12 +3,14 @@ import 'models.dart';
 enum ItemType {
   sushi,
   pizza,
+  base,
 }
 
 class ModelsFactory {
   static final _itemCollectionNames = <ItemType, String>{
     ItemType.sushi: 'sushi',
-    ItemType.pizza: 'pizza'
+    ItemType.pizza: 'pizza',
+    ItemType.base: 'base',
   };
 
   static BaseItemModel fromSnapshot(
@@ -20,6 +22,8 @@ class ModelsFactory {
         return SushiItemModel.fromSnapshot(map, id);
       case ItemType.pizza:
         return PizzaItemModel.fromSnapshot(map, id);
+      case ItemType.base:
+        return BaseItemModel.fromSnapshot(map, id);
     }
 
     return null;

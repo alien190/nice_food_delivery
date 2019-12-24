@@ -48,6 +48,7 @@ class App extends StatelessWidget {
         caption: TextStyle(color: Colors.white, fontSize: 18),
         subtitle: TextStyle(color: Colors.white, fontSize: 16),
         title: TextStyle(color: Colors.black87, fontSize: 22),
+        headline: TextStyle(color: Colors.black87, fontSize: 18),
         body2: TextStyle(color: Colors.white, fontSize: 22),
         body1: TextStyle(color: Colors.black87),
         subhead: TextStyle(color: Colors.grey[800], fontSize: 18),

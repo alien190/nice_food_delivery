@@ -91,17 +91,19 @@ class CardItemsScreen extends StatelessWidget {
             ],
           ),
         ),
-        Builder(builder: (ctx) => FloatingActionButton.extended(
-          onPressed: cardSum.isNotEmpty()
-              ? () {
-                  _placeOrder(bloc, ctx);
-                }
-              : null,
-          backgroundColor: cardSum.isNotEmpty()
-              ? themeData.accentColor
-              : themeData.backgroundColor,
-          label: Text('PLACE ORDER'),
-        ),),
+        Builder(
+          builder: (ctx) => FloatingActionButton.extended(
+            onPressed: cardSum.isNotEmpty()
+                ? () {
+                    _placeOrder(bloc, ctx);
+                  }
+                : null,
+            backgroundColor: cardSum.isNotEmpty()
+                ? themeData.accentColor
+                : themeData.backgroundColor,
+            label: Text('PLACE ORDER'),
+          ),
+        ),
       ],
     );
   }
@@ -144,6 +146,10 @@ class CardItemsScreen extends StatelessWidget {
       builder:
           (BuildContext context, AsyncSnapshot<List<CardItemModel>> snapshot) {
         if (snapshot.hasData) {
+          if (snapshot.data.length == 0) {
+            return Empty();
+          }
+
           final List<CardItemModel> items = snapshot.data;
           return ListView.builder(
             itemCount: items.length,
