@@ -58,7 +58,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/meal.png"
+  image_path: "assets/images/meal.jpg"
 
 
 # For information on the generic Dart part of this file, see the
