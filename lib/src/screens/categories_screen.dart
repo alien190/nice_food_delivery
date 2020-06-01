@@ -21,34 +21,78 @@ class CategoriesScreen extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<List<CategoryItemModel>> snapshot) {
         if (snapshot.hasData) {
-          return _buildList(snapshot.data);
+          return CategoryList(data: snapshot.data);
         }
-
         if (snapshot.hasError) {
           print(snapshot.error);
           return ErrorOccur();
         }
-
         return InProgress();
       },
     );
   }
+}
 
-  Widget _buildList(List<CategoryItemModel> data) {
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+class CategoryList extends StatefulWidget {
+  final List<CategoryItemModel> data;
+
+  CategoryList({
+    Key key,
+    @required List<CategoryItemModel> data,
+  })  : assert(data != null),
+        this.data = data,
+        super(key: key);
+
+  @override
+  _CategoryListState createState() => _CategoryListState();
+}
+
+class _CategoryListState extends State<CategoryList>
+    with SingleTickerProviderStateMixin {
+  Animation<Offset> _offsetAnimation;
+  AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 1000));
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset(0, 1.5),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.fastOutSlowIn,
       ),
-      itemCount: data.length,
-      padding: EdgeInsets.all(10),
-      itemBuilder: (BuildContext context, int index) =>
-          Provider<CategoryItemModel>.value(
-        value: data[index],
-        child: CategoryListTile(),
+    );
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SlideTransition(
+      position: _offsetAnimation,
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        itemCount: widget.data.length,
+        padding: EdgeInsets.all(10),
+        itemBuilder: (BuildContext context, int index) =>
+            Provider<CategoryItemModel>.value(
+          value: widget.data[index],
+          child: CategoryListTile(),
+        ),
       ),
     );
   }
 }
-
