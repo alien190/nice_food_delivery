@@ -11,6 +11,7 @@ class App extends StatelessWidget {
     return _initProviders(
       child: MaterialApp(
         title: 'Nice Food Delivery',
+        debugShowCheckedModeBanner: false,
         home: CategoriesScreen(),
         theme: _getThemeData(),
         routes: {
