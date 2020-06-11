@@ -56,28 +56,33 @@ class FadePageRoute<T> extends MaterialPageRoute<T> {
             child: ClipRRect(
               borderRadius:
                   BorderRadius.circular(borderRadius * (1 - animation.value)),
-              child: Image.network(url, fit: BoxFit.cover),
-            ),
-          ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: 10.0 * animation.value,
-                sigmaY: 10.0 * animation.value,
-              ),
-              child: Container(
-                color: Colors.black.withOpacity(animation.value * 0.3),
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(child: Image.network(url, fit: BoxFit.cover)),
+                  Positioned.fill(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 10.0 * animation.value,
+                        sigmaY: 10.0 * animation.value,
+                      ),
+                      child: Container(
+                        color: Colors.black.withOpacity(animation.value * 0.3),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
         ],
       );
-    } else {
-      if (!_isChildShown) {
-        if (onTransitionAnimationEnd != null) onTransitionAnimationEnd();
-        print('end');
-        _isChildShown = true;
-      }
+    }
+    else {
+//      if (!_isChildShown) {
+//        if (onTransitionAnimationEnd != null) onTransitionAnimationEnd();
+//        print('end');
+//        _isChildShown = true;
+//      }
       return child;
     }
   }

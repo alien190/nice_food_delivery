@@ -6,8 +6,7 @@ import '../screens/screens.dart';
 import 'widgets.dart';
 import '../mixins/mixins.dart';
 
-
-class ItemListTile extends StatelessWidget with AddToCardMixin{
+class ItemListTile extends StatelessWidget with AddToCardMixin {
   ItemListTile();
 
   @override
@@ -27,7 +26,7 @@ class ItemListTile extends StatelessWidget with AddToCardMixin{
             )
           ],
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.white, width: 2)),
+          border: Border.all(color: Colors.white, width: 0.2)),
       child: Stack(
         children: <Widget>[
           ListTileImage(
@@ -75,15 +74,16 @@ class ItemListTile extends StatelessWidget with AddToCardMixin{
 
   Widget _buildAddButton(BaseItemModel item, BuildContext context) {
     return Container(
-        alignment: Alignment.bottomRight,
-        child: IconButton(
-          padding: EdgeInsets.all(0),
-          onPressed: () => addItemToCard(item, context),
-          icon: Icon(
-            Icons.add_circle,
-            color: Colors.white,
-          ),
-        ));
+      alignment: Alignment.bottomRight,
+      child: IconButton(
+        padding: EdgeInsets.all(0),
+        onPressed: () => addItemToCardAnimated(item, context),
+        icon: Icon(
+          Icons.add_circle,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 
   ListTileCaption _buildListTileCaption(
@@ -94,6 +94,4 @@ class ItemListTile extends StatelessWidget with AddToCardMixin{
       textStyle: Theme.of(context).textTheme.subtitle,
     );
   }
-
-
 }

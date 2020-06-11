@@ -11,7 +11,7 @@ class FirebaseStorageProvider implements StorageProvider {
   static const _userCollection = 'users';
   static const _userCardCollection = 'card';
   static const _userOrdersCollection = 'orders';
-  static const _cardItemsOrderBy = 'itemId';
+  static const _cardItemsOrderBy = 'dateTime';
   static const _ordersOrderBy = 'dateTime';
 
   static final _instance = FirebaseStorageProvider._internal();
@@ -72,7 +72,7 @@ class FirebaseStorageProvider implements StorageProvider {
             .collection(_userCollection)
             .document(userId)
             .collection(_userCardCollection)
-            .orderBy(_cardItemsOrderBy)
+            .orderBy(_cardItemsOrderBy, descending: true)
             .snapshots()
             .map(_mapCardItems)));
   }

@@ -12,11 +12,18 @@ class FoodBloc {
   final _cardItemSum = BehaviorSubject<CardSumModel>();
   List<CardItemModel> _cardItems = [];
   CardSumModel _cardSum = CardSumModel.empty();
+  final PublishSubject<CardItemToAnimate> _cardItemToAnimateStream =
+      PublishSubject<CardItemToAnimate>();
+
+  StreamSubscription _cardItemsSubscription;
 
   Stream<CardSumModel> get cardItemSum => _cardItemSum.stream;
 
+  Stream<CardItemToAnimate> get cardItemToAnimate => _cardItemToAnimateStream;
+
   FoodBloc(this._repository) {
-    _repository.fetchCardItems().listen((List<CardItemModel> items) {
+    _cardItemsSubscription =
+        _repository.fetchCardItems().listen((List<CardItemModel> items) {
       double price = 0;
       double energy = 0;
       double carbohydrates = 0;
@@ -63,7 +70,7 @@ class FoodBloc {
     return _itemsStream;
   }
 
-  Future addItemToCard(BaseItemModel item) async {
+  Future addItemToCard(BaseItemModel item, {int dateTime}) async {
     final cardItem = CardItemModel(
       id: '',
       itemId: item.id,
@@ -75,6 +82,7 @@ class FoodBloc {
       energy: item.energy,
       proteins: item.proteins,
       fats: item.fats,
+      dateTime: dateTime,
     );
     return _repository.addItemToCard(cardItem);
   }
@@ -100,8 +108,13 @@ class FoodBloc {
     return _repository.addOrder(order);
   }
 
+  void addItemToCardWithAnimation(CardItemToAnimate cardItemToAnimate) {
+    _cardItemToAnimateStream.add(cardItemToAnimate);
+  }
+
   void dispose() {
-    _repository.dispose();
-    _cardItemSum.close();
+    _cardItemSum?.close();
+    _cardItemToAnimateStream?.close();
+    _cardItemsSubscription?.cancel();
   }
 }

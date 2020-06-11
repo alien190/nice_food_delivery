@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nice_food_delivery/src/helpers/fade_page_route.dart';
+import 'package:nice_food_delivery/src/widgets/animated_cart_sheet.dart';
 import 'package:provider/provider.dart';
 
 import '../blocs/blocs.dart';
@@ -64,27 +65,27 @@ class ItemsScreenState extends State<ItemsScreen>
     );
   }
 
-  @override
-  void onTransitionAnimationEnd() {
-    print('onStartAnimation');
-  }
-
   Widget _buildContent(Stream<List<BaseItemModel>> itemsStream) {
-    return StreamBuilder(
-      stream: itemsStream,
-      builder:
-          (BuildContext context, AsyncSnapshot<List<BaseItemModel>> snapshot) {
-        if (snapshot.hasData) {
-          if(_controller.isDismissed) _controller.forward();
-          return _buildList(snapshot.data);
-        }
+    return Stack(
+      children: <Widget>[
+        StreamBuilder(
+          stream: itemsStream,
+          builder: (BuildContext context,
+              AsyncSnapshot<List<BaseItemModel>> snapshot) {
+            if (snapshot.hasData) {
+              if (_controller.isDismissed) _controller.forward();
+              return _buildList(snapshot.data);
+            }
 
-        if (snapshot.hasError) {
-          return ErrorOccur();
-        }
+            if (snapshot.hasError) {
+              return ErrorOccur();
+            }
 
-        return InProgress();
-      },
+            return InProgress();
+          },
+        ),
+        AnimatedCartSheet(),
+      ],
     );
   }
 

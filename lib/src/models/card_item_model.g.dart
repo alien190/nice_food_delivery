@@ -18,6 +18,7 @@ CardItemModel _$CardItemModelFromJson(Map<String, dynamic> json) {
     carbohydrates: (json['carbohydrates'] as num)?.toDouble(),
     fats: (json['fats'] as num)?.toDouble(),
     proteins: (json['proteins'] as num)?.toDouble(),
+    dateTime: json['dateTime'] as int,
   );
 }
 
@@ -33,4 +34,5 @@ Map<String, dynamic> _$CardItemModelToJson(CardItemModel instance) =>
       'carbohydrates': instance.carbohydrates,
       'fats': instance.fats,
       'proteins': instance.proteins,
+      'dateTime': instance.dateTime,
     };

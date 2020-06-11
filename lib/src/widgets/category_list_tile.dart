@@ -47,15 +47,16 @@ class _CategoryListTileState extends State<CategoryListTile>
       height: double.infinity,
       width: double.infinity,
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black,
-              offset: new Offset(5.0, 5.0),
-              blurRadius: 10.0,
-            )
-          ],
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.white, width: 2)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            offset: new Offset(5.0, 5.0),
+            blurRadius: 10.0,
+          )
+        ],
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.white, width: 0.2),
+      ),
       child: Stack(
         children: <Widget>[
           ListTileImage(

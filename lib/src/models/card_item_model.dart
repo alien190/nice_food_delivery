@@ -15,6 +15,7 @@ class CardItemModel {
   final double carbohydrates;
   final double fats;
   final double proteins;
+  final int dateTime;
 
   CardItemModel({
     @required this.id,
@@ -27,7 +28,9 @@ class CardItemModel {
     @required this.carbohydrates,
     @required this.fats,
     @required this.proteins,
-  });
+    int dateTime,
+  }) : this.dateTime =
+            dateTime ?? DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
   factory CardItemModel.copyWith(
     CardItemModel item, {
@@ -41,6 +44,7 @@ class CardItemModel {
     double carbohydrates,
     double fats,
     double proteins,
+    int dateTime,
   }) {
     return CardItemModel(
       id: id ?? item.id,
@@ -53,6 +57,7 @@ class CardItemModel {
       fats: fats ?? item.fats,
       proteins: proteins ?? item.proteins,
       energy: energy ?? item.energy,
+      dateTime: dateTime ?? item.dateTime,
     );
   }
 
